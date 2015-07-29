@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ff27bdff">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center">
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/fromFindingRes"
+            android:spinnerMode="dropdown"
+            android:focusable="false"
+            android:clickable="true"
+            android:focusableInTouchMode="false"
+            android:entries="@array/from_finding_res" />
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/toWHaccount"
+            android:spinnerMode="dropdown"
+            android:entries="@array/to_wh_account"
+            android:focusable="false" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ammuont_enter"
+            android:text="@string/ammuont_enter"
+            android:inputType="number" />
+    </LinearLayout>
+</LinearLayout>

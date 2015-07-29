@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="from_finding_res" >
+        <item>@string/opr1</item>
+        <item>@string/opr2</item>
+        <item>@string/opr3</item>
+        <item>@string/opr4</item>
+
+    </string-array>
+    <string-array name="to_wh_account" >
+        <item>@string/opr5</item>
+        <item>@string/opr2</item>
+        <item>@string/opr3</item>
+        <item>@string/opr4</item>
+
+    </string-array>
+    <string-array name="chose_account" >
+        <item>@string/opr6</item>
+        <item>@string/opr2</item>
+        <item>@string/opr3</item>
+        <item>@string/opr4</item>
+
+    </string-array>
+
+</resources>
