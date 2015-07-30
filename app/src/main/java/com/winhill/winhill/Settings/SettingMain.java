@@ -20,7 +20,7 @@ import com.winhill.winhill.Transfers.TransferSendMenu;
 public class SettingMain extends Fragment implements View.OnClickListener {
 
     View rootView;
-    FragmentTransaction FragManager;
+    FragmentTransaction fragManager;
     Button logOut;
 
 
@@ -34,11 +34,10 @@ public class SettingMain extends Fragment implements View.OnClickListener {
         logOut.setOnClickListener(this);
 
 
-        FragManager = getFragmentManager().beginTransaction()
+        fragManager = getFragmentManager().beginTransaction()
                 .setCustomAnimations(R.animator.gla_there_come,R.animator.gla_there_gone);
-        FragManager.addToBackStack("");
-        FragManager.replace(R.id.settingsList, new SettingsTable(), "TransferSend");
-        FragManager.commit();
+        fragManager.replace(R.id.settingsList, new SettingsTable(), "TransferSend");
+        fragManager.commit();
 
         return rootView;
     }
@@ -46,38 +45,15 @@ public class SettingMain extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        FragManager = null;
-        int buttonIndex = translateIdToIndex(v.getId());
+        fragManager = getFragmentManager().beginTransaction();
 
-        switch (buttonIndex) {
-            case (1):
+        switch (v.getId()) {
+            case R.id.logOut:
 
-                if (getFragmentManager().findFragmentByTag("LoginMenu") != null) {
-
-                    FragManager = getFragmentManager().beginTransaction()
-                            .setCustomAnimations(R.animator.gla_back_gone, R.animator.gla_back_come);
-                    FragManager.replace(R.id.container, new LoginFrame(), "LoginMenu");
-                    FragManager.commit();
-                } else {
-
-                    FragManager = getFragmentManager().beginTransaction()
-                            .setCustomAnimations(R.animator.gla_back_gone, R.animator.gla_back_come);
-                    FragManager.replace(R.id.container, new LoginFrame(), "LoginMenu");
-                    FragManager.addToBackStack("");
-                    FragManager.commit();
-                }
-
-                break;
-
-        }
-    }
-    int translateIdToIndex(int id) {
-        int index = -1;
-        switch (id) {
-            case R.id.logOut :
-                index = 1;
+                    fragManager.setCustomAnimations(R.animator.gla_back_gone, R.animator.gla_back_come);
+                    fragManager.replace(R.id.container, new LoginFrame(), "LoginMenu");
                 break;
         }
-        return index;
+        fragManager.commit();
     }
 }

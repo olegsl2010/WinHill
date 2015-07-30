@@ -18,9 +18,7 @@ import com.winhill.winhill.SignUp.SignUp;
 import com.winhill.winhill.Wallet.WalletMain;
 import com.winhill.winhill.Wallet.WalletStartButton;
 
-/**
- * Created by olegs_000 on 21.07.2015.
- */
+
 public class LoginFrame extends Fragment implements View.OnClickListener {
 
     View rootView;
@@ -29,7 +27,7 @@ public class LoginFrame extends Fragment implements View.OnClickListener {
     Button lunch_demo_butt;
     Button log_in_butt;
     protected EditText email, pass;
-    FragmentTransaction FragManager;
+    FragmentTransaction fragManager;
 
 
 
@@ -58,25 +56,29 @@ public class LoginFrame extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        FragManager=null;
-        int buttonIndex = translateIdToIndex(v.getId());
-        switch (buttonIndex) {
-            case (1):
-                FragManager = getFragmentManager().beginTransaction();
-                FragManager.replace(R.id.container, new ForgotPassword());
-                FragManager.commit();
+
+        fragManager = getFragmentManager().beginTransaction();
+
+
+        switch (v.getId()) {
+            case R.id.forgot_pass_butt:
+
+                fragManager.setCustomAnimations(R.animator.gla_there_come, R.animator.gla_there_gone);
+                fragManager.replace(R.id.container, new ForgotPassword());
+                fragManager.addToBackStack(null);
+
                 break;
-//            case (2):
-//                FragManager = getFragmentManager().beginTransaction();
-//                FragManager.replace(R.id.container, new SignUp());
-//                FragManager.commit();
+//            case R.id.sign_up_butt:
+
+//                fragManager.replace(R.id.container, new SignUp());
 //                break;
-            case (3):
-                FragManager = getFragmentManager().beginTransaction();
-                FragManager.replace(R.id.container, new WalletStartButton()); // не тооо
-                FragManager.commit();
+            case R.id.lunch_demo_butt:
+
+                fragManager.setCustomAnimations(R.animator.gla_there_come, R.animator.gla_there_gone);
+                fragManager.replace(R.id.container, new WalletStartButton()); // не тооо
+
                 break;
-            case (4):
+            case R.id.log_in_butt:
                     final String getEmail = email.getText().toString();
                     final String getPass = pass.getText().toString();
                     ValidatorLogIn logIn = new ValidatorLogIn();
@@ -87,10 +89,9 @@ public class LoginFrame extends Fragment implements View.OnClickListener {
                 if (logIn.isValidEmail(getEmail) && logIn.isValidPassword(getPass)== true) {
 
 
-                    FragManager = getFragmentManager().beginTransaction()
-                            .setCustomAnimations(R.animator.gla_there_come, R.animator.gla_there_gone);
-                    FragManager.replace(R.id.container, new WalletStartButton(),"WalletMain");
-                    FragManager.commit();
+
+                    fragManager.setCustomAnimations(R.animator.gla_there_come, R.animator.gla_there_gone);
+                    fragManager.replace(R.id.container, new WalletStartButton(),"WalletMain");
                 }else
                 {
                     if(logIn.isValidEmail(getEmail)!=true){
@@ -100,24 +101,6 @@ public class LoginFrame extends Fragment implements View.OnClickListener {
                 }
                 break;
         }
-    }
-
-    int translateIdToIndex(int id) {
-        int index = -1;
-        switch (id) {
-            case R.id.forgot_pass_butt:
-                index = 1;
-                break;
-//            case R.id.sign_up_butt:
-//                index = 2;
-//                break;
-            case R.id.lunch_demo_butt:
-                index = 3;
-                break;
-            case R.id.log_in_butt:
-                index = 4;
-                break;
-        }
-        return index;
+        fragManager.commit();
     }
 }

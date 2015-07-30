@@ -16,15 +16,14 @@ import com.winhill.winhill.R;
 import com.winhill.winhill.Wallet.WalletMain;
 import com.winhill.winhill.Wallet.WalletStartButton;
 
-/**
- * Created by olegs_000 on 21.07.2015.
- */
-public class ForgotPassword extends Fragment  {
+
+public class ForgotPassword extends Fragment implements View.OnClickListener {
 
     View rootView;
     protected EditText email;
     Button continue_forgot_butt;
-    FragmentTransaction FragManager;
+    Button forgotPassBack;
+    FragmentTransaction fragManager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -33,11 +32,23 @@ public class ForgotPassword extends Fragment  {
 
         continue_forgot_butt= (Button) rootView.findViewById(R.id.continue_forgot_butt);
         email =(EditText) rootView.findViewById(R.id.forgotEmailText);
+        forgotPassBack = (Button) rootView.findViewById(R.id.forgotBackButt);
+
+
+        continue_forgot_butt.setOnClickListener(this);
+        forgotPassBack.setOnClickListener(this);
+
+
+        return rootView;
+    }
 
 
 
-        continue_forgot_butt.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()) {
+            case R.id.continue_forgot_butt:
 
                 final String getEmail = email.getText().toString();
 
@@ -47,48 +58,18 @@ public class ForgotPassword extends Fragment  {
                 if (logIn.isValidEmail(getEmail) == true) {
 
 
-                    FragManager = getFragmentManager().beginTransaction()
-                            .setCustomAnimations(R.animator.gla_there_come,R.animator.gla_there_gone);
-                    FragManager.replace(R.id.container, new LoginFrame(),"LoginMenu");
-                    FragManager.commit();
-                }else
-                {
+                    fragManager = getFragmentManager().beginTransaction()
+                            .setCustomAnimations(R.animator.gla_there_come, R.animator.gla_there_gone);
+                    fragManager.replace(R.id.container, new LoginFrame(), "LoginMenu");
+                    fragManager.commit();
+                } else {
                     email.setError("Invalid Email");
                 }
+                break;
+            case R.id.forgotBackButt:
+                getActivity().onBackPressed();
+                break;
+        }
 
-            }});
-
-
-
-        return rootView;
     }
-
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        getView().setFocusableInTouchMode(true);
-        getView().requestFocus();
-        getView().setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-
-                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
-
-
-                    FragManager = getFragmentManager().beginTransaction()
-                            .setCustomAnimations(R.animator.gla_there_come, R.animator.gla_there_gone);
-                    FragManager.replace(R.id.container, new LoginFrame(),"LoginMenu");
-                    FragManager.commit();
-
-                    return true;
-                }
-                return false;
-            }
-        });
-    }
-
-
-
 }

@@ -27,12 +27,13 @@ import com.winhill.winhill.Withdraw.WithdrawMenu;
  */
 public class WalletMain extends Fragment implements View.OnClickListener{
     View rootView;
+    String TAG = "WalletMain";
     Button whAccount;
     Button fundingSource;
     Button refill;
     Button withdraw;
     Button logOut;
-    FragmentTransaction FragManager;
+    FragmentTransaction fragManager;
 
 
 
@@ -54,86 +55,60 @@ public class WalletMain extends Fragment implements View.OnClickListener{
         withdraw.setOnClickListener(this);
         logOut.setOnClickListener(this);
 
-        FragManager = getFragmentManager().beginTransaction()
+        fragManager = getFragmentManager().beginTransaction()
                 .setCustomAnimations(R.animator.gla_there_come,R.animator.gla_there_gone);
-        FragManager.replace(R.id.listMenu, new WalletListMenu(),"ListWH");
-        FragManager.commit();
+        fragManager.replace(R.id.listMenu, new WalletListMenu(),"ListWH");
+        fragManager.commit();
+        Log.d(TAG, "onCreate");
         return rootView;}
 
 
 
     @Override
     public void onClick(View v) {
-        FragManager=null;
-        int buttonIndex = translateIdToIndex(v.getId());
+        fragManager = getFragmentManager().beginTransaction();
 
-        switch (buttonIndex) {
-            case (1):
+        switch (v.getId()) {
+            case R.id.wh_acc_wallet:
                 if (getFragmentManager().findFragmentByTag("ListWH")== null) {
-                    FragManager = getFragmentManager().beginTransaction()
-                            .setCustomAnimations(R.animator.gla_back_gone, R.animator.gla_back_come);
-                    FragManager.replace(R.id.listMenu, new WalletListMenu(), "ListWH");
-                    FragManager.commit();
+
+                    fragManager.setCustomAnimations(R.animator.gla_back_gone, R.animator.gla_back_come);
+                    fragManager.replace(R.id.listMenu, new WalletListMenu(), "ListWH");
+                    Log.d(TAG, "Case 1 = null");
                 }
-                break;
-            case (2):
-                if (getFragmentManager().findFragmentByTag("SourceList")== null) {
-                FragManager = getFragmentManager().beginTransaction()
-                        .setCustomAnimations(R.animator.gla_there_come,R.animator.gla_there_gone);
-                FragManager.replace(R.id.listMenu, new FundingSourceList(),"SourceList");
-                FragManager.commit();}
 
-                break;
-            case (3):
-                if (getFragmentManager().findFragmentByTag("RefillMenu")== null){
-                FragManager = getFragmentManager().beginTransaction()
-                        .setCustomAnimations(R.animator.gla_there_come,R.animator.gla_there_gone);
-                FragManager.addToBackStack("");
-                FragManager.replace(R.id.listMenu, new RefillMenu(),"RefillMenu");
-                FragManager.commit();}
-                break;
-
-            case (4):
-                if (getFragmentManager().findFragmentByTag("withdrawMenu")== null){
-                FragManager = getFragmentManager().beginTransaction()
-                        .setCustomAnimations(R.animator.gla_there_come, R.animator.gla_there_gone);
-                FragManager.replace(R.id.listMenu, new WithdrawMenu(),"withdrawMenu");
-                FragManager.commit();}
-                break;
-            case (5):
-
-                    FragManager = getFragmentManager().beginTransaction()
-                            .setCustomAnimations(R.animator.gla_back_gone, R.animator.gla_back_come);
-                    FragManager.replace(R.id.container, new LoginFrame(),"LoginMenu");
-                    FragManager.commit();
-
-                break;
-        }
-    }
-
-    int translateIdToIndex(int id) {
-        int index = -1;
-        switch (id) {
-            case R.id.wh_acc_wallet :
-                index = 1;
                 break;
             case R.id.funding_source:
-                index = 2;
+                if (getFragmentManager().findFragmentByTag("SourceList")== null) {
+                    fragManager.setCustomAnimations(R.animator.gla_there_come, R.animator.gla_there_gone);
+                fragManager.replace(R.id.listMenu, new FundingSourceList(), "SourceList");
+                    Log.d(TAG, "Case 2 = null");
+                }
+
                 break;
             case R.id.refill:
-                index = 3;
+                if (getFragmentManager().findFragmentByTag("RefillMenu")== null){
+                    fragManager.setCustomAnimations(R.animator.gla_there_come, R.animator.gla_there_gone);
+                fragManager.replace(R.id.listMenu, new RefillMenu(), "RefillMenu");
+                    Log.d(TAG, "Case 3 = null");
+                }
+
                 break;
+
             case R.id.withdraw:
-                index = 4;
+                if (getFragmentManager().findFragmentByTag("withdrawMenu")== null){
+                    fragManager.setCustomAnimations(R.animator.gla_there_come, R.animator.gla_there_gone);
+                fragManager.replace(R.id.listMenu, new WithdrawMenu(), "withdrawMenu");
+                }
+
                 break;
             case R.id.logOut:
-                index = 5;
+
+                fragManager.setCustomAnimations(R.animator.gla_back_gone, R.animator.gla_back_come);
+                    fragManager.replace(R.id.container, new LoginFrame(),"LoginMenu");
+
                 break;
         }
-        return index;
+        fragManager.commit();
     }
-
-
-
-
 }

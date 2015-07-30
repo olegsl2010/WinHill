@@ -35,11 +35,15 @@ public class Logo extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        FragManager = getFragmentManager().beginTransaction()
-                .setCustomAnimations(R.animator.gla_there_come,R.animator.gla_there_gone);
-        FragManager.replace(R.id.container, new LoginFrame(),"LoginMenu");
-        FragManager.commit();
 
+        switch (v.getId()) {
+            case R.id.logo:
+
+                FragManager = getFragmentManager().beginTransaction()
+                        .setCustomAnimations(R.animator.gla_there_come, R.animator.gla_there_gone);
+                FragManager.replace(R.id.container, new LoginFrame(), "LoginMenu");
+                FragManager.commit();
+                break;
+        }
     }
-
 }

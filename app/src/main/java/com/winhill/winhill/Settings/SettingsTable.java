@@ -17,7 +17,7 @@ public class SettingsTable extends Fragment implements View.OnClickListener {
 
     View rootView;
     Button photo;
-    FragmentTransaction FragManager;
+    FragmentTransaction fragManager;
 
 
     @Override
@@ -34,32 +34,18 @@ public class SettingsTable extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        FragManager=null;
-        int buttonIndex = translateIdToIndex(v.getId());
+        fragManager = getFragmentManager().beginTransaction();
 
-        switch (buttonIndex) {
-            case (1):
+        switch (v.getId()) {
+            case R.id.addPhoto:
 
-                FragManager = getFragmentManager().beginTransaction()
-                        .setCustomAnimations(R.animator.gla_there_come,R.animator.gla_there_gone);
-                FragManager.addToBackStack("");
-                FragManager.replace(R.id.settingsList, new SettingsAddPhoto(), "TransferSend");
-                FragManager.commit();
+                fragManager.setCustomAnimations(R.animator.gla_there_come, R.animator.gla_there_gone);
+                fragManager.addToBackStack("");
+                fragManager.replace(R.id.settingsList, new SettingsAddPhoto(), "TransferSend");
 
                 break;
-
         }
+        fragManager.commit();
 
-    }
-
-    int translateIdToIndex(int id) {
-        int index = -1;
-        switch (id) {
-            case R.id.addPhoto :
-                index = 1;
-                break;
-
-        }
-        return index;
     }
 }

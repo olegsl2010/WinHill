@@ -65,4 +65,5 @@
     <string name="addPhotoMenu">Add Photo</string>
     <string name="settings_text">Settings</string>
     <string name="password">Password</string>
+    <string name="forgotBackButt">Back</string>
 </resources>

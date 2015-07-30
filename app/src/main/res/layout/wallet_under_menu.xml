@@ -4,7 +4,7 @@
     android:layout_height="fill_parent"
     android:background="#ff27bdff"
     android:layout_gravity="bottom"
-    android:weightSum="100">
+    android:weightSum="1">
 
     <LinearLayout
         android:id="@+id/dinamicFragment"
@@ -14,7 +14,7 @@
 
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_weight="98">
+        android:layout_weight="1">
     </LinearLayout>
 
     <LinearLayout
@@ -25,7 +25,7 @@
         android:layout_alignParentBottom="true"
         android:layout_gravity="center_horizontal|bottom"
         android:weightSum="3"
-        android:layout_weight="2">
+        android:layout_weight="0">
 
         <Button
             android:layout_width="52dp"

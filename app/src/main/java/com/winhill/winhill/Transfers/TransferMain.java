@@ -52,73 +52,37 @@ public class TransferMain extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        FragManager=null;
-        int buttonIndex = translateIdToIndex(v.getId());
+        FragManager = getFragmentManager().beginTransaction();
 
-        switch (buttonIndex) {
-            case (1):
+
+        switch (v.getId()) {
+            case R.id.sendButt:
 
                 Log.d("Send", String.valueOf(getFragmentManager().findFragmentById(R.id.transferSendText)));
                 if(getActivity().findViewById(R.id.transferSendText)==null) {
 
-                    FragManager = getFragmentManager().beginTransaction()
-                            .setCustomAnimations(R.animator.gla_back_gone, R.animator.gla_back_come);
-                    FragManager.addToBackStack("");
+                    FragManager.setCustomAnimations(R.animator.gla_back_gone, R.animator.gla_back_come);
                     FragManager.replace(R.id.transferList, new TransferSendMenu(), "TransferSend");
-                    FragManager.commit();
-                    Log.d("Send", String.valueOf(getFragmentManager().findFragmentById(R.id.transferSendText)));
                     request.setTextColor(Color.BLACK);
                     send.setTextColor(Color.RED);
                 }
-
                 break;
-            case (2):
+            case R.id.requestButt:
                 if(getActivity().findViewById(R.id.transferRequestText)==null) {
-                    FragManager = getFragmentManager().beginTransaction()
-                            .setCustomAnimations(R.animator.gla_there_come, R.animator.gla_there_gone);
-                    FragManager.addToBackStack("");
+
+                    FragManager.setCustomAnimations(R.animator.gla_there_come, R.animator.gla_there_gone);
                     FragManager.replace(R.id.transferList, new TransferRequestMenu(), "TransferRequest");
-                    FragManager.commit();
                     request.setTextColor(Color.RED);
                     send.setTextColor(Color.BLACK);
                 }
                 break;
-            case (3):
+            case R.id.logOut:
 
-                if (getFragmentManager().findFragmentByTag("LoginMenu") != null) {
-
-                    FragManager = getFragmentManager().beginTransaction()
-                            .setCustomAnimations(R.animator.gla_back_gone, R.animator.gla_back_come);
-                    FragManager.replace(R.id.container, new LoginFrame(), "LoginMenu");
-                    FragManager.commit();
-                } else {
-
-                    FragManager = getFragmentManager().beginTransaction()
-                            .setCustomAnimations(R.animator.gla_back_gone, R.animator.gla_back_come);
-                    FragManager.replace(R.id.container, new LoginFrame(), "LoginMenu");
-                    FragManager.addToBackStack("");
-                    FragManager.commit();
-                }
-
+                FragManager.setCustomAnimations(R.animator.gla_back_gone, R.animator.gla_back_come);
+                FragManager.replace(R.id.container, new LoginFrame(), "LoginMenu");
                 break;
         }
-
+        FragManager.commit();
     }
 
-    int translateIdToIndex(int id) {
-        int index = -1;
-        switch (id) {
-            case R.id.sendButt :
-                index = 1;
-                break;
-            case R.id.requestButt:
-                index = 2;
-                break;
-            case R.id.logOut :
-            index = 3;
-            break;
-
-        }
-        return index;
-    }
 }
