@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.winhill.winhill.FundSource.FundingSourceList;
+import com.winhill.winhill.Logining.LoginFrame;
 import com.winhill.winhill.R;
 import com.winhill.winhill.WHaccount.WalletListMenu;
 
@@ -23,6 +24,7 @@ public class TransferMain extends Fragment implements View.OnClickListener {
     View rootView;
     Button send;
     Button request;
+    Button logOut;
     FragmentTransaction FragManager;
 
     @Override
@@ -32,9 +34,11 @@ public class TransferMain extends Fragment implements View.OnClickListener {
 
         send =(Button) rootView.findViewById(R.id.sendButt);
         request = (Button) rootView.findViewById(R.id.requestButt);
+        logOut = (Button) rootView.findViewById(R.id.logOut);
 
         send.setOnClickListener(this);
         request.setOnClickListener(this);
+        logOut.setOnClickListener(this);
 
 
         send.setTextColor(Color.RED);
@@ -79,6 +83,24 @@ public class TransferMain extends Fragment implements View.OnClickListener {
                     send.setTextColor(Color.BLACK);
                 }
                 break;
+            case (3):
+
+                if (getFragmentManager().findFragmentByTag("LoginMenu") != null) {
+
+                    FragManager = getFragmentManager().beginTransaction()
+                            .setCustomAnimations(R.animator.gla_back_gone, R.animator.gla_back_come);
+                    FragManager.replace(R.id.container, new LoginFrame(), "LoginMenu");
+                    FragManager.commit();
+                } else {
+
+                    FragManager = getFragmentManager().beginTransaction()
+                            .setCustomAnimations(R.animator.gla_back_gone, R.animator.gla_back_come);
+                    FragManager.replace(R.id.container, new LoginFrame(), "LoginMenu");
+                    FragManager.addToBackStack("");
+                    FragManager.commit();
+                }
+
+                break;
         }
 
     }
@@ -92,6 +114,9 @@ public class TransferMain extends Fragment implements View.OnClickListener {
             case R.id.requestButt:
                 index = 2;
                 break;
+            case R.id.logOut :
+            index = 3;
+            break;
 
         }
         return index;

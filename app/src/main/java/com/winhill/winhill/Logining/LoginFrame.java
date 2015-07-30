@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.winhill.winhill.DemoMode.DemoMode;
 import com.winhill.winhill.ForgotPass.ForgotPassword;
@@ -24,9 +25,10 @@ public class LoginFrame extends Fragment implements View.OnClickListener {
 
     View rootView;
     Button forgot_pass_butt;
-    Button sign_up_butt;
+//    Button sign_up_butt;
     Button lunch_demo_butt;
     Button log_in_butt;
+    protected EditText email, pass;
     FragmentTransaction FragManager;
 
 
@@ -39,12 +41,14 @@ public class LoginFrame extends Fragment implements View.OnClickListener {
         rootView = inflater.inflate(R.layout.login_frame, container, false);
 
         forgot_pass_butt = (Button) rootView.findViewById(R.id.forgot_pass_butt);
-        sign_up_butt = (Button) rootView.findViewById(R.id.sign_up_butt);
+//        sign_up_butt = (Button) rootView.findViewById(R.id.sign_up_butt);
         lunch_demo_butt = (Button) rootView.findViewById(R.id.lunch_demo_butt);
         log_in_butt = (Button) rootView.findViewById(R.id.log_in_butt);
+        email =(EditText) rootView.findViewById(R.id.email);
+        pass = (EditText) rootView.findViewById(R.id.password);
 
         forgot_pass_butt.setOnClickListener(this);
-        sign_up_butt.setOnClickListener(this);
+//        sign_up_butt.setOnClickListener(this);
         lunch_demo_butt.setOnClickListener(this);
         log_in_butt.setOnClickListener(this);
 
@@ -62,33 +66,38 @@ public class LoginFrame extends Fragment implements View.OnClickListener {
                 FragManager.replace(R.id.container, new ForgotPassword());
                 FragManager.commit();
                 break;
-            case (2):
-                FragManager = getFragmentManager().beginTransaction();
-                FragManager.replace(R.id.container, new SignUp());
-                FragManager.commit();
-                break;
+//            case (2):
+//                FragManager = getFragmentManager().beginTransaction();
+//                FragManager.replace(R.id.container, new SignUp());
+//                FragManager.commit();
+//                break;
             case (3):
                 FragManager = getFragmentManager().beginTransaction();
-                FragManager.addToBackStack("");
                 FragManager.replace(R.id.container, new WalletStartButton()); // не тооо
                 FragManager.commit();
                 break;
             case (4):
-                if(getFragmentManager().findFragmentByTag("WalletMain")!=null){
+                    final String getEmail = email.getText().toString();
+                    final String getPass = pass.getText().toString();
+                    ValidatorLogIn logIn = new ValidatorLogIn();
+
+
+                Log.d("logIn", String.valueOf(logIn.isValidEmail(getEmail)));
+
+                if (logIn.isValidEmail(getEmail) && logIn.isValidPassword(getPass)== true) {
+
 
                     FragManager = getFragmentManager().beginTransaction()
-                            .setCustomAnimations(R.animator.gla_there_come,R.animator.gla_there_gone);
+                            .setCustomAnimations(R.animator.gla_there_come, R.animator.gla_there_gone);
                     FragManager.replace(R.id.container, new WalletStartButton(),"WalletMain");
-                    FragManager.addToBackStack("");
                     FragManager.commit();
-
-                }else{
-
-                    FragManager = getFragmentManager().beginTransaction()
-                            .setCustomAnimations(R.animator.gla_there_come,R.animator.gla_there_gone);
-                    FragManager.replace(R.id.container, new WalletStartButton(),"WalletMain");
-                    FragManager.addToBackStack("");
-                    FragManager.commit();}
+                }else
+                {
+                    if(logIn.isValidEmail(getEmail)!=true){
+                    email.setError("Invalid Email");}
+                    if(logIn.isValidPassword(getPass)!=true){
+                    pass.setError("Pass must cont +6");}
+                }
                 break;
         }
     }
@@ -99,9 +108,9 @@ public class LoginFrame extends Fragment implements View.OnClickListener {
             case R.id.forgot_pass_butt:
                 index = 1;
                 break;
-            case R.id.sign_up_butt:
-                index = 2;
-                break;
+//            case R.id.sign_up_butt:
+//                index = 2;
+//                break;
             case R.id.lunch_demo_butt:
                 index = 3;
                 break;

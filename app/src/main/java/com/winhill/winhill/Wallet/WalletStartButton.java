@@ -1,9 +1,11 @@
 package com.winhill.winhill.Wallet;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,7 +52,6 @@ public class WalletStartButton extends Fragment implements View.OnClickListener 
 
         FragManager = getFragmentManager().beginTransaction()
                 .setCustomAnimations(R.animator.gla_there_come,R.animator.gla_there_gone);
-        FragManager.addToBackStack("");
         FragManager.add(R.id.dinamicFragment, new WalletMain(),"WHaccount");
         FragManager.commit();
 
@@ -67,34 +68,38 @@ public class WalletStartButton extends Fragment implements View.OnClickListener 
         switch (buttonIndex) {
 
             case (1):
+
+                if (getFragmentManager().findFragmentByTag("WHaccount") == null) {
                 wallet.setBackgroundResource(R.drawable.wallet_on);
                 transfer.setBackgroundResource(R.drawable.transfer_off);
                 settings.setBackgroundResource(R.drawable.settings_off);
                 FragManager = getFragmentManager().beginTransaction()
                         .setCustomAnimations(R.animator.gla_back_gone, R.animator.gla_back_come);
                 FragManager.replace(R.id.dinamicFragment, new WalletMain(), "WHaccount");
-                FragManager.commit();
+                FragManager.commit();}
 
                 break;
             case (2):
+                if (getFragmentManager().findFragmentByTag("TransferMain") == null) {
                 wallet.setBackgroundResource(R.drawable.wallet_off);
                 transfer.setBackgroundResource(R.drawable.transfer_on);
                 settings.setBackgroundResource(R.drawable.settings_off);
                 FragManager = getFragmentManager().beginTransaction()
                         .setCustomAnimations(R.animator.gla_there_come, R.animator.gla_there_gone);
                 FragManager.replace(R.id.dinamicFragment, new TransferMain(), "TransferMain");
-                FragManager.commit();
+                FragManager.commit();}
 
                 break;
             case (3):
+                if (getFragmentManager().findFragmentByTag("SettingsMain") == null) {
                 wallet.setBackgroundResource(R.drawable.wallet_off);
                 transfer.setBackgroundResource(R.drawable.transfer_off);
                 settings.setBackgroundResource(R.drawable.settings_on);
 
                 FragManager = getFragmentManager().beginTransaction()
                         .setCustomAnimations(R.animator.gla_there_come, R.animator.gla_there_gone);
-                FragManager.replace(R.id.listMenu, new SettingMain(), "SettingsMain");
-                FragManager.commit();
+                FragManager.replace(R.id.dinamicFragment, new SettingMain(), "SettingsMain");
+                FragManager.commit();}
                 break;
         }
     }
@@ -114,5 +119,34 @@ public class WalletStartButton extends Fragment implements View.OnClickListener 
                 break;
         }
         return index;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+        getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK){
+                    if (getFragmentManager().findFragmentByTag("WHaccount") == null ) {
+
+                        wallet.setBackgroundResource(R.drawable.wallet_on);
+                        transfer.setBackgroundResource(R.drawable.transfer_off);
+                        settings.setBackgroundResource(R.drawable.settings_off);
+                        FragManager = getFragmentManager().beginTransaction()
+                                .setCustomAnimations(R.animator.gla_back_gone, R.animator.gla_back_come);
+                        FragManager.replace(R.id.dinamicFragment, new WalletMain(), "WHaccount");
+                        FragManager.commit();}
+
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 }

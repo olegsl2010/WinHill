@@ -63,4 +63,6 @@
     <string name="legalAgrButt">Legal Agreement</string>
     <string name="languagesButt">Languages</string>
     <string name="addPhotoMenu">Add Photo</string>
+    <string name="settings_text">Settings</string>
+    <string name="password">Password</string>
 </resources>

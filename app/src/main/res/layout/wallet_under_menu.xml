@@ -1,27 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#ff27bdff">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#ff27bdff"
+    android:layout_gravity="bottom"
+    android:weightSum="100">
 
     <LinearLayout
         android:id="@+id/dinamicFragment"
-        android:layout_width="match_parent"
-        android:layout_height="540dp"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
         android:orientation="vertical"
 
         android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true">
+        android:layout_alignParentRight="true"
+        android:layout_weight="98">
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:touchscreenBlocksFocus="false"
         android:layout_alignParentBottom="true"
         android:layout_gravity="center_horizontal|bottom"
-        android:weightSum="3">
+        android:weightSum="3"
+        android:layout_weight="2">
 
         <Button
             android:layout_width="52dp"
@@ -34,24 +38,24 @@
             android:layout_weight="1" />
 
         <Button
-            android:layout_width="51dp"
-            android:layout_height="52dp"
+            android:layout_width="52dp"
+            android:layout_height="51dp"
             android:id="@+id/transfer"
             android:background="@drawable/transfer_off"
             android:layout_gravity="center"
             android:layout_marginLeft="35dp"
             android:layout_marginRight="35dp"
-            android:layout_weight="2" />
+            android:layout_weight="1" />
 
         <Button
-            android:layout_width="51dp"
-            android:layout_height="52dp"
+            android:layout_width="52dp"
+            android:layout_height="51dp"
             android:id="@+id/settings"
             android:layout_gravity="center"
-            android:layout_marginLeft="35dp"
             android:layout_marginRight="35dp"
             android:background="@drawable/settings_off"
-            android:layout_weight="3" />
+            android:layout_weight="1"
+            android:layout_marginLeft="35dp" />
     </LinearLayout>
 
-</FrameLayout>
+</LinearLayout>

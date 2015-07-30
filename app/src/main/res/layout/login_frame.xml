@@ -32,7 +32,7 @@
             android:ems="10"
             android:id="@+id/email"
             android:layout_gravity="center"
-            android:text="@string/email_addres"
+            android:hint="@string/email_addres"
             android:textStyle="italic" />
     </LinearLayout>
 
@@ -45,12 +45,12 @@
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="textEmailAddress"
             android:ems="10"
             android:id="@+id/password"
             android:layout_gravity="center"
-            android:text="Password"
-            android:textStyle="italic" />
+            android:hint="Password"
+            android:textStyle="italic"
+            android:inputType="textPassword" />
     </LinearLayout>
 
     <LinearLayout
@@ -68,19 +68,19 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_weight="1">
+    <!--<LinearLayout-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:layout_weight="1">-->
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/sign_up"
-            android:id="@+id/sign_up_butt"
-            android:layout_gravity="center" />
-    </LinearLayout>
+        <!--<Button-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="@string/sign_up"-->
+            <!--android:id="@+id/sign_up_butt"-->
+            <!--android:layout_gravity="center" />-->
+    <!--</LinearLayout>-->
 
     <LinearLayout
         android:layout_width="wrap_content"

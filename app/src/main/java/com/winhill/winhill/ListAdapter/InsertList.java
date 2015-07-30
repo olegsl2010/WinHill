@@ -34,8 +34,6 @@ public class InsertList extends ArrayList<PostData> {
         data.setPostDate("Click for delete currency");
         data.setPostTitle("REMOVE WH ACCOUNT");
         listData.add(4,data);
-
-        Log.d("To list", String.valueOf(listData.size()));
         return listData;
 
     }

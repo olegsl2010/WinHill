@@ -56,7 +56,7 @@ public class WalletMain extends Fragment implements View.OnClickListener{
 
         FragManager = getFragmentManager().beginTransaction()
                 .setCustomAnimations(R.animator.gla_there_come,R.animator.gla_there_gone);
-        FragManager.replace(R.id.listMenu, new WalletListMenu());
+        FragManager.replace(R.id.listMenu, new WalletListMenu(),"ListWH");
         FragManager.commit();
         return rootView;}
 
@@ -69,56 +69,43 @@ public class WalletMain extends Fragment implements View.OnClickListener{
 
         switch (buttonIndex) {
             case (1):
-
-                FragManager = getFragmentManager().beginTransaction()
-                        .setCustomAnimations(R.animator.gla_back_gone, R.animator.gla_back_come);
-                FragManager.replace(R.id.listMenu, new WalletListMenu(), "WHaccount");
-                FragManager.commit();
-
+                if (getFragmentManager().findFragmentByTag("ListWH")== null) {
+                    FragManager = getFragmentManager().beginTransaction()
+                            .setCustomAnimations(R.animator.gla_back_gone, R.animator.gla_back_come);
+                    FragManager.replace(R.id.listMenu, new WalletListMenu(), "ListWH");
+                    FragManager.commit();
+                }
                 break;
             case (2):
-
+                if (getFragmentManager().findFragmentByTag("SourceList")== null) {
                 FragManager = getFragmentManager().beginTransaction()
                         .setCustomAnimations(R.animator.gla_there_come,R.animator.gla_there_gone);
                 FragManager.replace(R.id.listMenu, new FundingSourceList(),"SourceList");
-                FragManager.commit();
+                FragManager.commit();}
 
                 break;
             case (3):
-
+                if (getFragmentManager().findFragmentByTag("RefillMenu")== null){
                 FragManager = getFragmentManager().beginTransaction()
                         .setCustomAnimations(R.animator.gla_there_come,R.animator.gla_there_gone);
                 FragManager.addToBackStack("");
                 FragManager.replace(R.id.listMenu, new RefillMenu(),"RefillMenu");
-                FragManager.commit();
+                FragManager.commit();}
                 break;
 
             case (4):
-
+                if (getFragmentManager().findFragmentByTag("withdrawMenu")== null){
                 FragManager = getFragmentManager().beginTransaction()
-                        .setCustomAnimations(R.animator.gla_there_come,R.animator.gla_there_gone);
+                        .setCustomAnimations(R.animator.gla_there_come, R.animator.gla_there_gone);
                 FragManager.replace(R.id.listMenu, new WithdrawMenu(),"withdrawMenu");
-                FragManager.commit();
+                FragManager.commit();}
                 break;
             case (5):
 
-                if(getFragmentManager().findFragmentByTag("LoginMenu")!=null){
-
-//                    FragManager = getFragmentManager().beginTransaction();
-////                    FragManager.remove(getFragmentManager().findFragmentById(R.id.upperMenu));
-//                    FragManager.remove(getFragmentManager().findFragmentById(R.id.underMenu));
-//                    FragManager.commit();
                     FragManager = getFragmentManager().beginTransaction()
                             .setCustomAnimations(R.animator.gla_back_gone, R.animator.gla_back_come);
                     FragManager.replace(R.id.container, new LoginFrame(),"LoginMenu");
                     FragManager.commit();
-                }else{
-
-                FragManager = getFragmentManager().beginTransaction()
-                        .setCustomAnimations(R.animator.gla_back_gone, R.animator.gla_back_come);
-                FragManager.replace(R.id.container, new LoginFrame(),"LoginMenu");
-                FragManager.addToBackStack("");
-                FragManager.commit();}
 
                 break;
         }
@@ -141,34 +128,12 @@ public class WalletMain extends Fragment implements View.OnClickListener{
                 break;
             case R.id.logOut:
                 index = 5;
-                Log.d("dsdsdsd", String.valueOf(index));
                 break;
         }
         return index;
     }
 
 
-    @Override
-    public void onResume() {
-        super.onResume();
 
-        getView().setFocusableInTouchMode(true);
-        getView().requestFocus();
-        getView().setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-
-                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK){
-
-                    FragManager = getFragmentManager().beginTransaction();
-                    FragManager.replace(R.id.listMenu, new WalletListMenu(),"WHaccount");
-                    FragManager.commit();
-
-                    return true;
-                }
-                return false;
-            }
-        });
-    }
 
 }

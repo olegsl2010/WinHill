@@ -30,9 +30,9 @@
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
             android:ems="10"
-            android:id="@+id/editText"
+            android:id="@+id/forgotEmailText"
             android:layout_gravity="center"
-            android:text="@string/email_addres"
+            android:hint="@string/email_addres"
             android:textStyle="italic" />
     </LinearLayout>
 
