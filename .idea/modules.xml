@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/WinHill.iml" filepath="$PROJECT_DIR$/WinHill.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/commons-codec-1.10-rep/commons-codec-1.10-rep.iml" filepath="$PROJECT_DIR$/commons-codec-1.10-rep/commons-codec-1.10-rep.iml" />
     </modules>
   </component>
 </project>

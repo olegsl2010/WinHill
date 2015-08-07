@@ -2,33 +2,45 @@ package com.winhill.winhill.Logining;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Context;
+import android.org.apache.commons.codec.binary.Base64;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.winhill.winhill.DemoMode.DemoMode;
 import com.winhill.winhill.ForgotPass.ForgotPassword;
 import com.winhill.winhill.R;
-import com.winhill.winhill.SignUp.SignUp;
-import com.winhill.winhill.Wallet.WalletMain;
 import com.winhill.winhill.Wallet.WalletStartButton;
+
+import java.util.concurrent.ExecutionException;
+
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
 
 
 public class LoginFrame extends Fragment implements View.OnClickListener {
 
+    String secretKey = "XMzDdG4D03CKm2IxIWQw7g==";
+
+
     View rootView;
     Button forgot_pass_butt;
-//    Button sign_up_butt;
+    //    Button sign_up_butt;
     Button lunch_demo_butt;
+    private AsyncTask<String, String, String> asyncTask;
     Button log_in_butt;
     protected EditText email, pass;
     FragmentTransaction fragManager;
-
+    private String response;
+    private static Context context;
+    private String resp;
+    private String errorMsg;
+    String TAG = "LoginFrame";
 
 
 
@@ -79,28 +91,85 @@ public class LoginFrame extends Fragment implements View.OnClickListener {
 
                 break;
             case R.id.log_in_butt:
-                    final String getEmail = email.getText().toString();
-                    final String getPass = pass.getText().toString();
-                    ValidatorLogIn logIn = new ValidatorLogIn();
+                AsyncTaskRunner runner=new AsyncTaskRunner();
+                final String getEmail = email.getText().toString();
+                final String getPass = pass.getText().toString();
+                ValidatorLogIn logIn = new ValidatorLogIn();
 
+                String str = symmetricEncrypt(getPass, secretKey);
+                System.out.println(str);
+                System.out.println(symmetricDecrypt(str,secretKey));
 
-                Log.d("logIn", String.valueOf(logIn.isValidEmail(getEmail)));
 
                 if (logIn.isValidEmail(getEmail) && logIn.isValidPassword(getPass)== true) {
+                    asyncTask=runner.execute(getEmail,getPass);
+                    try {
+                        String asyncResultText=asyncTask.get();
+                        response = asyncResultText.trim()+"normal";
+                    } catch (InterruptedException e1) {
+                        response = e1.getMessage()+"one";
+                    } catch (ExecutionException e1) {
+                        response = e1.getMessage()+"two";
+                    } catch (Exception e1) {
+                        response = e1.getMessage()+"tree";
+                    }
+                    email.setError(response);
+                }
 
 
-
-                    fragManager.setCustomAnimations(R.animator.gla_there_come, R.animator.gla_there_gone);
-                    fragManager.replace(R.id.container, new WalletStartButton(),"WalletMain");
-                }else
+                else
                 {
                     if(logIn.isValidEmail(getEmail)!=true){
-                    email.setError("Invalid Email");}
+                        email.setError("Invalid Email");}
                     if(logIn.isValidPassword(getPass)!=true){
-                    pass.setError("Pass must cont +6");}
+                        pass.setError("Pass must cont +6");}
                 }
                 break;
         }
         fragManager.commit();
     }
+
+
+    public static String symmetricEncrypt(String text, String secretKey) {
+        byte[] raw;
+        String encryptedString;
+        SecretKeySpec skeySpec;
+        byte[] encryptText = text.getBytes();
+        Cipher cipher;
+        try {
+            
+            raw = Base64.decodeBase64(secretKey);
+            skeySpec = new SecretKeySpec(raw, "AES");
+            cipher = Cipher.getInstance("AES");
+            cipher.init(Cipher.ENCRYPT_MODE, skeySpec);
+            encryptedString = Base64.encodeBase64String(cipher.doFinal(encryptText));
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return "Error";
+        }
+        return encryptedString;
+    }
+
+    public static String symmetricDecrypt(String text, String secretKey) {
+        Cipher cipher;
+        String encryptedString;
+        byte[] encryptText = null;
+        byte[] raw;
+        SecretKeySpec skeySpec;
+        try {
+            raw = Base64.decodeBase64(secretKey);
+            skeySpec = new SecretKeySpec(raw, "AES");
+            encryptText = Base64.decodeBase64(text);
+            cipher = Cipher.getInstance("AES");
+            cipher.init(Cipher.DECRYPT_MODE, skeySpec);
+            encryptedString = new String(cipher.doFinal(encryptText));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Error";
+        }
+        return encryptedString;
+    }
+
+
 }
